@@ -1,0 +1,18 @@
+<!-- 
+	** Author: Collin James, CS 290
+	** Date: 5/10/16
+	** Description: Activity: Get and Post checker, api page
+-->
+<h1>{{type}} Request Received:</h1>
+<h2>URL query string</h2>
+<ul>
+  {{#each urlQList}}
+    <li>param: "{{this.name}}", value: "{{this.value}}"</li>
+  {{/each}}
+</ul>
+<h2>POST body</h2>
+<ul>
+  {{#each postList}}
+    <li>name: "{{this.name}}", value: "{{this.value}}"</li>
+  {{/each}}
+</ul>
