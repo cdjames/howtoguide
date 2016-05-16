@@ -23,9 +23,12 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 /* send js and css */
-// app.get('/app.js', function (req, res) {
-//   res.sendFile(__dirname + '/app.js');
-// })
+app.get('/main.css', function (req, res) {
+  res.sendFile(__dirname + '/main.css');
+});
+app.get('/interaction.js', function (req, res) {
+  res.sendFile(__dirname + '/interaction.js');
+});
 /* handle main pages */
 app.get('/', function (req, res){
   res.type('html');

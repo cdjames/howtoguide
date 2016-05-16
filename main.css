@@ -1,0 +1,79 @@
+body {
+	padding: 0px;
+	margin: 0px;
+}
+
+div, article, footer{
+	padding: 0px 10px;
+}
+
+section{
+	margin-bottom: 15px;
+}
+
+header span, header button {
+	position: relative;
+	float: left;
+	margin-bottom: 0px;
+	font-weight: 400;
+	vertical-align: middle;
+	/*cursor: pointer;*/
+	background-image: none;
+	white-space: nowrap;
+	padding: 2px 12px;
+	font-size: 14px;
+	line-height: 1.42857;
+	/*-moz-user-select: none;*/
+	display: inline-block;
+	text-align: center;
+}
+
+header span{
+	font-size: 1.6em;
+}
+
+header ul {
+	position: absolute;
+	float: left;
+	font-size: 14px;
+	background-color: #FFF;
+	border: 1px solid rgba(0, 0, 0, 0.15);
+	border-radius: 4px;
+	box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.176);
+	background-clip: padding-box;
+	min-width: 185px;
+	padding: 5px 10px;
+	margin: 2px 0px 0px;
+	z-index: 1000;
+	top: 100%;
+	visibility: hidden;
+	list-style: outside none none;
+	left: 240px;
+	visibility: hidden;
+}
+
+header div p:last-child {
+	margin-left: 20px;
+}
+
+body>div {
+	clear: both;
+}
+
+.buttons {
+	display: inline-block;
+	vertical-align: middle;
+	position: relative;
+	background: pink none repeat scroll 0% 0%;
+	width: 100%;
+	padding: 10px 10px 0px;
+}
+
+.buttons>span{
+	padding-left: 0px;
+}
+
+.btn {
+	border-radius: 4px;
+	border: 2px solid transparent;
+}
