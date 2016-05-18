@@ -1,0 +1,52 @@
+<!-- 
+	** Author: Collin James, CS 290
+	** Date: 5/10/16
+	** Description: Activity: How-To Guide
+-->
+<article>
+	<section>
+		On the previous page, we made a call to the API to search for a user name. Once we've found it, we can start to do some useful things.
+	</section>
+	<section>
+		<h1>Getting the user ID</h1>
+		<p>Here again is that call that we made on the previous page:</p>
+		<code rel="Terminal">
+			curl "https://api.soundcloud.com/users?client_id=k345ee556p456i45645t456s56e456c45ret&<span class="added">q=WildBearsAttackElephants</span>"
+		</code>
+		<p>
+			Finally, we have gotten some information back. Here is what we'll see:
+		</p>
+		<code rel="JSON">
+			[{"playlist_count":1,"track_count":12,"subscriptions":[{"product":{"id":"free","name":"Free"}}],"first_name":"","last_name":"","full_name":"","city":"Grand Rapids","description":"Download songs here: http://wbae.co\n     As Demiera Harris (theequalground.com) put it, \"...Wild Bears Attack Elephants is here to kick you in the teeth (musically of course) while sending flowers to your hospital room after.\" In other words, the WBAE sound always comes back to guitars and awesome drum parts in one form or another with a library that is probably best described as alternative rock.\n\nWild Bears Attack Elephants consists primarily of Collin James (guitar/vox), Beren Alexander (drums) and Adam Whitmore (guitar/vox). Contributions have also made by a host of others - Bob Bretzlaff, Nathan James, Joel Berry, and Jeremy White.\n\nThe members and contributors of WBAE have been working together in various combinations for many years, starting in Linden, MI with bands (in chronological order) Spork, Fat Souls, and Espers. Check out our older work here: http://wbae.co/fb\n\nPrior bands have focused on playing live shows, primarily in the Flint, MI area, but WBAE had been limited to being a songwriting and recording endeavor with Adam and Beren on opposite sides of the state of MI and Collin living in Japan.  Collin moved back to MI in late 2013 and rehearsals and preparations for live shows ensued.  Rock.\n\nThe recording process is completely DIY, with recording and mixing and mastering efforts being handled by Adam and Collin.","country":"United States","public_favorites_count":0,"followers_count":100,"followings_count":64,"plan":"Free","myspace_name":null,"discogs_name":null,"website_title":"Review (en fran\u00E7ais)","website":"http://mybandnews.com/2015/07/wildbearsattackelephants-keeai/","reposts_count":1,"comments_count":74,"online":false,"likes_count":0,"avatar_url":"https://i1.sndcdn.com/avatars-000048373843-zizehe-large.jpg","id":52119028,"kind":"user","permalink_url":"http://soundcloud.com/wildbearsattackelephants","uri":"https://api.soundcloud.com/users/52119028","username":"WildBearsAttackElephants","permalink":"wildbearsattackelephants","last_modified":"2016/02/19 13:28:10 +0000"}]
+		</code>
+		<p>
+			Of course, all we're really interested at this point is this line: <code>"id":52119028</code>. Now we can find that user reliably without searching.</p>
+	</section>
+	<section>
+		<h1>Grabbing User Info Directly</h1>
+		<p>
+			Now we can do this:
+		</p>
+		<code rel="Terminal">
+			curl "https://api.soundcloud.com/users<span class="added">/52119028</span>?client_id=k345ee556p456i45645t456s56e456c45ret"
+		</code>
+		<p>
+			The exact same information as above will be returned, but this time we didn't have to search for it. With that user ID, we're off to the races.
+		</p>
+		<p>
+			Now it's probably about time we stopped using <code>curl</code> and started trying to incorporate this into a website. How about doing the same call above with JavaScript?
+		</p>
+		<code rel="JavaScript">
+function doAPIcalls () {var req = new XMLHttpRequest();req.open("GET", "https://api.soundcloud.com/users/52119028?client_id=k345ee556p456i45645t456s56e456c45ret");req.addEventListener('load', function () {if(req.status >= 200 && req.status < 400){var data = JSON.parse(req.responseText);console.log(data);} else {console.log("Whoops, something went wrong. Maybe: ", req.statusText);}});req.send();}
+		</code>
+		<p>
+			By assigning that <code>JSON.parse(req.responseText)</code> to a variable, you can gain access to any of the information contained in the JSON object. For example, by assigning the object to a variable <code>data</code>, and including a tag with id <span class="special">permalink</span>, we can add "<code id="permalink"></code>" to the page with the following code:
+		</p>
+		<code rel="JavaScript">
+var permalink = document.getElementById('permalink');permalink.textContent = data.permalink_url;
+		</code>
+		<p>In fact, that's exactly how I added the url in the previous paragraph!</p>
+	</section>
+</article>
+<footer>
+</footer>

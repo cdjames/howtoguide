@@ -7,7 +7,7 @@
 	<section>
 		Now that we have access to the API, let's start building our app. Remember, we want to display a user's name, a list of tracks, and some information about each track. To get started with any of this, we first need to search for our user. 
 		<aside>
-			If you want other users of your app to be able to login themselves, you'll need to use the <span class="special">connect</span> endpoint instead of this approach. In that case, the <a href="https://developers.soundcloud.com/docs/api/sdks#javascript">Javascript</a>, <a href="https://github.com/soundcloud/soundcloud-ruby">Ruby</a>, or <a href="">Python</a> wrappers for the HTML API.
+			If you want other users of your app to be able to login themselves, you'll need to use the <span class="special">connect</span> endpoint instead of this approach. In that case, the <a href="https://developers.soundcloud.com/docs/api/sdks#javascript">Javascript</a>, <a href="https://github.com/soundcloud/soundcloud-ruby">Ruby</a>, or <a href="">Python</a> wrappers for the HTML API would be more appropriate.
 		</aside>
 	</section>
 	<section>
@@ -31,6 +31,9 @@
 		<p>
 			The <span class="special">q</span> parameter, matched with a user name string, will return either that user, or any user with a name including the value.
 		</p>
+		<aside>
+			It's good to note here that the <span class="special">client_id</span> you see on this page is not a real one. You'll need to replace it with your own!
+		</aside>
 		<p>Head to the next page to see what we can do with the data from this call.</p>
 
 	</section>

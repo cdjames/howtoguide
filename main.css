@@ -7,6 +7,11 @@ div, article, footer{
 	padding: 0px 10px;
 }
 
+article {
+	word-break: keep-all;
+	word-wrap: break-word;
+}
+
 section{
 	margin-bottom: 15px;
 }
