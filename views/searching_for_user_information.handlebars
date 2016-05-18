@@ -16,18 +16,23 @@
 		<code rel="Terminal">
 			curl "https://api.soundcloud.com/users?client_id=k345ee556p456i45645t456s56e456c45ret"
 		</code>
-		<p>This code wouldn't actually give us any information, but it represents the basic structure of the calls. Notice the <span class="special">users</span> folder; that will change to <span class="special">tracks</span> or <span class="special">groups</a> depending on the information you would like to reach. And of course, none of this will work without a <span class="special">client_id</span>. </p>
+		<p>
+			This code wouldn't actually give us any information because no user is specified, but it represents the basic structure of the calls. Notice the <span class="special">users</span> folder; that will change to <span class="special">tracks</span> or <span class="special">groups</span> depending on the information you would like to reach. And of course, none of this will work without a <span class="special">client_id</span>. 
+		</p>
 	</section>
 	<section>
 		<h1>Search with 'q'</h1>
-		We need a user ID to access information about tracks and other interesting things, but we only have a name in mind: enter the <span class="special">q</span> parameter.
-	</section>
-	<section>
-		
-		<img src="">
-	</section>
-	<section>
-		That part was not too painful. Now on to the fun stuff!
+		<p>
+			Here's our situation: without using the <span class="special">connect</span> endpoint, we don't have a user ID to access information about tracks and other interesting things. However, if we have a user name we can do a search. Enter the <span class="special">q</span> parameter. Let's see a call, and then we'll break it down:
+		</p>
+		<code rel="Terminal">
+			curl "https://api.soundcloud.com/users?client_id=k345ee556p456i45645t456s56e456c45ret&<span class="added">q=WildBearsAttackElephants</span>"
+		</code>
+		<p>
+			The <span class="special">q</span> parameter, matched with a user name string, will return either that user, or any user with a name including the value.
+		</p>
+		<p>Head to the next page to see what we can do with the data from this call.</p>
+
 	</section>
 </article>
 <footer>

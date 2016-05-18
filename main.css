@@ -77,3 +77,11 @@ body>div {
 	border-radius: 4px;
 	border: 2px solid transparent;
 }
+
+.added {
+	color: orange;
+}
+
+.special {
+	color: green;
+}
