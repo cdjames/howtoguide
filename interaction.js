@@ -124,15 +124,37 @@ function doAPIcalls () {
 			data = JSON.parse(req.responseText);
 			console.log(data);
 			var permalink = document.getElementById('permalink');
-			permalink.textContent = data.permalink_url;
+			if(permalink)
+				permalink.textContent = data.permalink_url;
 			
 		} else {
 			console.log("Whoops, something went wrong. Maybe: ", req.statusText);
 		}
 	});
 	req.send();
-
 }
+
+// function getStuff (url) {
+// 	var data = 0;
+// 	var req = new XMLHttpRequest();
+// 	req.open("GET", url);
+// 	req.addEventListener('load', function () {
+// 		if(req.status >= 200 && req.status < 400){ // check for valid request
+// 			// var response = 
+// 			data = JSON.parse(req.responseText);
+// 			console.log(data);
+// 			// var permalink = document.getElementById('permalink');
+// 			// if(permalink)
+// 			// 	permalink.textContent = data.permalink_url;
+// 			return data;
+// 		} else {
+// 			console.log("Whoops, something went wrong. Maybe: ", req.statusText);
+// 		}
+
+// 	});
+// 	req.send();
+// 	console.log(data);
+// }
 
 function hideEl (element) {
 	element.style.visibility = (element.style.visibility != 'visible') ? 'visible' : 'hidden';
