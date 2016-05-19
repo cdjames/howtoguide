@@ -2,6 +2,8 @@
 document.addEventListener('DOMContentLoaded', bindClicks);
 document.addEventListener('DOMContentLoaded', addCodeIndents);
 document.addEventListener('DOMContentLoaded', doAPIcalls);
+var USERID = 52119028,
+	CLIENTID = '1306a99549a44496515f2e61993af805';
 
 function bindClicks () {
 	
@@ -79,13 +81,12 @@ function addCodeIndents () {
 			codeText = codeText.replace(/\s+/, '');
 			codeText = codeText.replace(/\);(?!\s*\})/g, ')≤');
 			
-			console.log(codeText);
+			// console.log(codeText);
 			// format breaks and tabs
 			codeText = codeText.replace(/[{}≤]/g, function (ch) {
 			// codeText = codeText.replace(/[{}≤]/g, function (ch) {
 				if(ch === "{" ){//|| ch === "["){
 					tab += spaces;
-					console.log(tab.length);
 					ch = ch + '<br>' + tab;
 					return ch;
 				} else if (ch === "}"){//} || ch === "]") {
@@ -106,7 +107,7 @@ function addCodeIndents () {
 			// replace special symbol
 			codeText = codeText.replace(/≤/g, ';')
 			// // replace spaces with HTML space
-			console.log(codeText);
+			// console.log(codeText);
 			codeText=codeText.replace(/\s/g, '&nbsp;');
 			code[i].innerHTML = codeText;
 			
@@ -117,45 +118,134 @@ function addCodeIndents () {
 function doAPIcalls () {
 	var data, url;
 	var req = new XMLHttpRequest();
-	req.open("GET", "https://api.soundcloud.com/users/52119028?client_id=1306a99549a44496515f2e61993af805");
+	req.open("GET", "https://api.soundcloud.com/users/"+USERID+"?client_id="+CLIENTID, true);
 	req.addEventListener('load', function () {
 		if(req.status >= 200 && req.status < 400){ // check for valid request
 			// var response = 
 			data = JSON.parse(req.responseText);
-			console.log(data);
-			var permalink = document.getElementById('permalink');
+			THEDATA = data;
+			// console.log(data);
+			var permalink = document.getElementById('permalink'),
+				full_name = document.getElementById('full_name');
 			if(permalink)
 				permalink.textContent = data.permalink_url;
-			
+			if(full_name)
+			{
+				var span = document.createElement("span");
+				span.textContent = data.full_name;
+				full_name.appendChild(span);
+			}
 		} else {
 			console.log("Whoops, something went wrong. Maybe: ", req.statusText);
 		}
 	});
 	req.send();
+
+	req2 = new XMLHttpRequest();
+	req2.open("GET", "https://api.soundcloud.com/users/"+USERID+"/tracks?client_id="+CLIENTID, true);
+	req2.addEventListener('load', function () {
+		if(req2.status >= 200 && req2.status < 400){ // check for valid request
+			data = JSON.parse(req2.responseText);
+			var headers = ["title", "plays", "favoritings", "comments"],
+				keys = ["title", "playback_count", "favoritings_count"],
+				table;
+			table = buildTable(data, headers, keys);
+			// console.log(table);
+			if(table)
+			{
+				var tbl = document.getElementById('track_table');
+				tbl.appendChild(table);
+
+				data.forEach(function (object) {
+					var requ = new XMLHttpRequest();
+					requ.open("GET", "https://api.soundcloud.com/tracks/"+object.id+"/comments?client_id="+CLIENTID, true);
+					requ.addEventListener('load', function () {
+						if(requ.status >= 200 && requ.status < 400){ // check for valid request
+							// var table = document.getElementById('track_table');
+							data = JSON.parse(requ.responseText);
+							// console.log("comment data: ");
+							// console.log(data);
+							var uls = {}, ul, li;
+							data.forEach(function (object) { //id, body
+								if(object.user_id != USERID){
+									if(!uls[object.track_id]){
+										ul = document.createElement('ul');
+										ul.id = 'c_'+object.track_id;
+										uls[object.track_id] = ul;
+									}
+									li = document.createElement('li');
+									li.textContent = object.body;
+									uls[object.track_id].appendChild(li);
+									// console.log(uls);
+								}
+							});
+							var track;
+							for(key in uls){
+								// console.log(key);
+
+								if(track = document.getElementById(key)){
+									// console.log("found " + key);
+									document.getElementById(key).appendChild(uls[key]);
+								}
+							}
+						} else {
+							console.log("Whoops, something went wrong. Maybe: ", req3.statusText);
+						}
+					});
+					requ.send();
+				});
+			}
+		} else {
+			console.log("Whoops, something went wrong. Maybe: ", req2.statusText);
+		}
+	});
+	req2.send();
 }
-
-// function getStuff (url) {
-// 	var data = 0;
-// 	var req = new XMLHttpRequest();
-// 	req.open("GET", url);
-// 	req.addEventListener('load', function () {
-// 		if(req.status >= 200 && req.status < 400){ // check for valid request
-// 			// var response = 
-// 			data = JSON.parse(req.responseText);
-// 			console.log(data);
-// 			// var permalink = document.getElementById('permalink');
-// 			// if(permalink)
-// 			// 	permalink.textContent = data.permalink_url;
-// 			return data;
-// 		} else {
-// 			console.log("Whoops, something went wrong. Maybe: ", req.statusText);
-// 		}
-
-// 	});
-// 	req.send();
-// 	console.log(data);
-// }
 
 function hideEl (element) {
 	element.style.visibility = (element.style.visibility != 'visible') ? 'visible' : 'hidden';
+}
+
+function buildTable (data, headers, keys) {
+	var table = document.createElement("table"), // the table element
+		tr; // hold rows before appending
+
+	/* build headers*/
+	tr = buildRow(headers, "th");
+	table.appendChild(tr);
+
+	/* build rows */
+	data.forEach(function (object, index) {
+		var values = []
+			track_id = object.id;
+		/* make an array of values */
+		for (var i = 0; i < keys.length; i++) {
+			values.push(object[keys[i]]);
+		};
+	
+		/* add a row */
+		tr = buildRow(values, "td", track_id);
+		table.appendChild(tr);
+	})
+
+	/* */
+	function buildRow (array, type, track_id) { // an array of 
+		var thisTr = document.createElement("tr"),
+			column;
+		/* create <td> or <th> elements */
+		array.forEach(function (content) {
+			column = document.createElement(type);
+			/* for non-header items */
+			column.textContent = content;
+			/* add content and style */
+			column.style.border = "solid 1px black";
+			thisTr.id = track_id;
+			thisTr.appendChild(column);
+		});
+		return thisTr;
+	}
+
+	table.style.borderCollapse = "collapse";
+	// console.log(table);
+	return table;
 }
