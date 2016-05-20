@@ -44,9 +44,11 @@ app.get('/', function (req, res){
   res.type('html');
   var qry = req.query,
       thetopic = qry.topic,
-      thetitle = capitalize(thetopic.replace(/_/g, ' '));
-  
-  res.render(thetopic+'.handlebars', {title: thetitle, topic: thetopic});
+      thetitle = (thetopic) ? capitalize(thetopic.replace(/_/g, ' ')) : null;
+  if(thetitle)
+    res.render(thetopic+'.handlebars', {title: thetitle, topic: thetopic});
+  else
+    res.render('introduction.handlebars', {title: "Introduction", topic: 'introduction'});
 })
 
 /* handle errors */
