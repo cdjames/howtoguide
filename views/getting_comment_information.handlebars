@@ -1,27 +1,57 @@
 <!-- 
 	** Author: Collin James, CS 290
-	** Date: 5/10/16
+	** Date: 5/18/16
 	** Description: Activity: How-To Guide
 -->
 <article>
 	<section>
 		<h1>Getting Comments</h1>
 		<p>This will be very similar to what we've seen previously:</p>
-		<code rel="Terminal">
-			curl "https://api.soundcloud.com/users/{user id}/<span class="added">comments</span>?client_id=k345ee556p456i45645t456s56e456c45ret"
+		<code>
+<pre>
+curl "https://api.soundcloud.com/tracks/{track id}/<span class="added">comments</span>?client_id=k345ee556p456i45645t456s56e456c45ret"</pre>
 		</code>
 		<p>
 			Here's what we'll get:
 		</p>
-		<code rel="JSON">
-			[{"kind":"comment","id":261272442,"created_at":"2015/12/23 20:54:17 +0000","user_id":52119028,"track_id":169354330,"timestamp":94713,"body":"this song is still blowing my mind. Jesus.","uri":"https://api.soundcloud.com/comments/261272442","user":{"id":52119028,"kind":"user","permalink":"wildbearsattackelephants","username":"WildBearsAttackElephants","last_modified":"2016/05/18 16:00:28 +0000","uri":"https://api.soundcloud.com/users/52119028","permalink_url":"http://soundcloud.com/wildbearsattackelephants","avatar_url":"https://i1.sndcdn.com/avatars-000048373843-zizehe-large.jpg"}},{"kind":"comment","id":261106481, ...]
+		<code>
+<pre>
+[{
+  "kind":"comment",
+  "id":261272442,
+  "created_at":"2015/12/23 20:54:17 +0000",
+  "user_id":52119028,
+  "track_id":169354330,
+  "timestamp":94713,
+  "body":"this song is still blowing my mind. Jesus.",
+  "uri":"https://api.soundcloud.com/comments/261272442",
+  "user":{
+    "id":52119028,
+    "kind":"user",
+    "permalink":"wildbearsattackelephants",
+    "username":"WildBearsAttackElephants",
+    "last_modified":"2016/05/18 16:00:28 +0000",
+    "uri":"https://api.soundcloud.com/users/52119028",
+    "permalink_url":"http://soundcloud.com/wildbearsattackelephants",
+    "avatar_url":"https://i1.sndcdn.com/avatars-000048373843-zizehe-large.jpg"
+  }
+},{
+  "kind":"comment",
+  "id":261106481, ...] 
+</pre>
 		</code>
 		<p>
-			Again, we get an array of comment objects. For this to be really useful for our application, we'll need to pair comments with tracks, so the <span class="special">track_id</span> property will be important for us. Again, by running <code>https://api.soundcloud.com/<span class="added">comments/{comment id}</span>?client_id=k345ee556p456i45645t456s56e456c45ret</code>, we can target specific comments.
+			Again, we get an array of comment objects that apply to each track. For this to be really useful for our application, we'll need to pair comments with tracks, so the <span class="special">track_id</span> property will be important for us. Again, by calling <code>https://api.soundcloud.com/<span class="added">comments/{comment id}</span>?client_id=k345ee556p456i45645t456s56e456c45ret</code>, we can target specific comments. And, by calling <code>https://api.soundcloud.com/<span class="added">users/{user id}/comments</span>?client_id=k345ee556p456i45645t456s56e456c45ret</code>, we can retrieve comments that a user made. We are actually going to call:
+		</p>
+		<code>
+<pre>
+curl https://api.soundcloud.com/<span class="added">tracks/{tracks id}/comments</span>?client_id=k345ee556p456i45645t456s56e456c45ret
+</pre>
+		</code>
+		<p>
+			This will get us a list of all comments for a track. It's not perfect, but with some filtering, it will do.
 		</p>
 		<p>
 			Finally, let's put all of these API calls together and display some information.
 		</p>
 </article>
-<footer>
-</footer>

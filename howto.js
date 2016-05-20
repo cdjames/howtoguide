@@ -1,6 +1,6 @@
 /*
   ** Author: Collin James, CS 290
-  ** Date: 5/10/16
+  ** Date: 5/18/16
   ** Description: Activity: How-to Guide, node server code
 */
 
@@ -29,43 +29,26 @@ app.get('/main.css', function (req, res) {
 app.get('/interaction.js', function (req, res) {
   res.sendFile(__dirname + '/interaction.js');
 });
+
+/* handle images */
+var IMAGES = ['newapp.jpg', 'final.jpg'];
+
+IMAGES.forEach(function (name) {
+  app.get('/images/'+name, function (req, res) {
+    res.sendFile(__dirname + '/images/'+name);
+  });
+})
+
 /* handle main pages */
 app.get('/', function (req, res){
   res.type('html');
   var qry = req.query,
-      topic = qry.topic,
-      thetitle = capitalize(topic.replace(/_/g, ' '));
+      thetopic = qry.topic,
+      thetitle = capitalize(thetopic.replace(/_/g, ' '));
   
-  res.render(topic+'.handlebars', {title: thetitle});
+  res.render(thetopic+'.handlebars', {title: thetitle, topic: thetopic});
 })
 
-/* process post requests */
-.post('/getPost', function (req, res) {
-  res.type('html');
-  console.log("post received");
-  // console.log(req.body);
-  var list = [],
-      context = {};
-  for (var p in req.body)
-    list.push({'name': p, 'value': req.body[p]});
-
-  context.urlQList = getQueryString(req); // must use same array name in handlebars file
-  context.postList = list; // must use same array name (here dataList) in handlebars file
-  context.type = "POST";
-  // console.log(context);
-  res.render('getPost.handlebars', context);
-  // res.send('getPost.handlebars');
-})
-/*process get requests: print the names and values passed in url*/
-.get('/getPost', function (req,res){
-  res.type('html');
-  console.log("get received");
-  var context = {};
-  context.urlQList = getQueryString(req); // must use same array name (here dataList) in handlebars file
-  context.type = "GET";
-  // console.log(res.render);
-  res.render('getPost.handlebars', context);
-});
 /* handle errors */
 app.use(function(req,res){
   res.type('text/plain');

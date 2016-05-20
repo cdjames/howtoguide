@@ -1,39 +1,41 @@
 <!-- 
 	** Author: Collin James, CS 290
-	** Date: 5/10/16
+	** Date: 5/18/16
 	** Description: Activity: How-To Guide
 -->
 <article>
 	<section>
 		Now that we have access to the API, let's start building our app. Remember, we want to display a user's name, a list of tracks, and some information about each track. To get started with any of this, we first need to search for our user. 
-		<aside>
+	</section>
+	<aside>
 			If you want other users of your app to be able to login themselves, you'll need to use the <span class="special">connect</span> endpoint instead of this approach. In that case, the <a href="https://developers.soundcloud.com/docs/api/sdks#javascript">Javascript</a>, <a href="https://github.com/soundcloud/soundcloud-ruby">Ruby</a>, or <a href="">Python</a> wrappers for the HTML API would be more appropriate.
 		</aside>
-	</section>
+<!-- </article>
+<article> -->
 	<section>
 		<h1>Making a Basic Call</h1>
 		<p>A basic call in the API looks like this:</p>
-		<code rel="Terminal">
-			curl "https://api.soundcloud.com/users?client_id=k345ee556p456i45645t456s56e456c45ret"
+		<code>
+<pre>curl "https://api.soundcloud.com/users?client_id=k345ee556p456i45645t456s56e456c45ret"</pre>
 		</code>
 		<p>
-			This code wouldn't actually give us any information because no user is specified, but it represents the basic structure of the calls. Notice the <span class="special">users</span> folder; that will change to <span class="special">tracks</span> or <span class="special">groups</span> depending on the information you would like to reach. And of course, none of this will work without a <span class="special">client_id</span>. 
+			This code wouldn't actually give us any information because no user is specified, but it represents the basic structure of the calls. Notice the <span class="special">users</span> folder; that will change to <span class="special">tracks</span> or <span class="special">groups</span>, etc. depending on the information you would like to reach. And of course, none of this will work without a <span class="special">client_id</span>. 
 		</p>
+		<aside>
+			It's good to note here that the <span class="special">client_id</span> you see on this page is not a real one. You'll need to replace it with your own!
+		</aside>
 	</section>
 	<section>
 		<h1>Search with 'q'</h1>
 		<p>
 			Here's our situation: without using the <span class="special">connect</span> endpoint, we don't have a user ID to access information about tracks and other interesting things. However, if we have a user name we can do a search. Enter the <span class="special">q</span> parameter. Let's see a call, and then we'll break it down:
 		</p>
-		<code rel="Terminal">
-			curl "https://api.soundcloud.com/users?client_id=k345ee556p456i45645t456s56e456c45ret&<span class="added">q=WildBearsAttackElephants</span>"
+		<code>
+<pre>curl "https://api.soundcloud.com/users?client_id=k345ee556p456i45645t456s56e456c45ret&<span class="added">q=WildBearsAttackElephants</span>"</pre>
 		</code>
 		<p>
 			The <span class="special">q</span> parameter, matched with a user name string, will return either that user, or any user with a name including the value.
 		</p>
-		<aside>
-			It's good to note here that the <span class="special">client_id</span> you see on this page is not a real one. You'll need to replace it with your own!
-		</aside>
 		<p>Head to the next page to see what we can do with the data from this call.</p>
 
 	</section>

@@ -1,6 +1,12 @@
+/* 
+	** Author: Collin James, CS 290
+	** Date: 5/18/16
+	** Description: Activity: How-To Guide, css
+*/
 body {
 	padding: 0px;
 	margin: 0px;
+	overflow-x: hidden;
 }
 
 div, article, footer{
@@ -19,6 +25,18 @@ section{
 	margin-bottom: 15px;
 }
 
+code {
+	font-size: 95%;
+}
+
+code>pre{
+    background: black none repeat scroll 0% 0%;
+    color: white;
+    padding: 10px;
+    overflow: scroll;
+    max-height: 200px;
+    line-height: 1.5em;
+}
 header span, header button {
 	position: relative;
 	float: left;
@@ -68,6 +86,85 @@ body>div {
 	clear: both;
 }
 
+footer{
+	text-align: center;
+	margin-bottom: 30px;
+}
+
+a.button {
+	border: 1px solid grey;
+	padding: 7px;
+	border-radius: 5px;
+	background: lightpink none repeat scroll 0% 0%;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a {
+	color: #444;
+	text-decoration: none;
+}
+
+a:visited {
+	color: #666;
+}
+
+footer>a:visited {
+	color: white;
+}
+footer>a:visited {
+	text-decoration: none;
+}
+
+table {
+	margin: auto;
+	border-collapse: collapse;
+	/*border: 1px solid black;*/
+}
+
+th {
+	/*border: 1px solid #000;*/
+	padding: 3px 8px;
+}
+
+td {
+	padding: 6px;
+	border: 1px solid black;
+}
+
+td>ul {
+	padding-left: 18px;
+}
+
+td:nth-child(2), td:nth-child(3) {
+	text-align: center;
+}
+
+tr:nth-child(even) {
+	background-color: #fef;
+}
+
+td:first-child {
+	text-align: right;
+}
+
+img {
+	width: 100%;
+}
+
+aside {
+	border: 1px dashed;
+	font-size: 90%;
+	padding: 9px;
+	border-radius: 3px;
+}
+
+button#contents:hover {
+	color: purple;
+}
+
 .buttons {
 	display: inline-block;
 	vertical-align: middle;
@@ -91,5 +188,19 @@ body>div {
 }
 
 .special {
-	color: green;
+	color: blueviolet;
+	border: solid #ccc thin;
+	border-radius: 2px;
+	padding: 1px 1px 0px 1px;
+	background: #fef;
+	font-family: monospace;
+	font-size: 84%;
+}
+
+#full_name>h1 {
+	text-align: center;
+}
+
+#track_table, #full_name {
+	font-family: Helvetica, 'sans-serif';
 }

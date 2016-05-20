@@ -1,6 +1,6 @@
 <!-- 
 	** Author: Collin James, CS 290
-	** Date: 5/10/16
+	** Date: 5/18/16
 	** Description: Activity: How-To Guide
 -->
 <article>
@@ -10,15 +10,76 @@
 	<section>
 		<h1>Getting a Track</h1>
 		<p>In our case, we want a list of all of a user's tracks. Here's how we'll accomplish that:</p>
-		<code rel="Terminal">
-			curl "https://api.soundcloud.com/users/{user id}/<span class="added">tracks</span>?client_id=k345ee556p456i45645t456s56e456c45ret"
-		</code>
+		<div class="code">
+		<code>
+			<pre>
+curl "https://api.soundcloud.com/users/{user id}/<span class="added">tracks</span>?client_id=k345ee556p456i45645t456s56e456c45ret"</pre>
+		 </code>
+	</div> 
 		<p>
-			Remember that '{user id}' needs to be replaced with an actual user id, which we got on the previous page. Here's what we'll get:
+			Remember that <span class="special">{user id}</span> needs to be replaced with an actual user id, which we got on the previous page. Here's what we'll get:
 		</p>
-		<code rel="JSON">
-			[{"kind":"track","id":232526780,"created_at":"2015/11/11 01:52:54 +0000","user_id":52119028,"duration":235462,"commentable":true,"state":"finished","original_content_size":41521460,"last_modified":"2015/11/11 01:55:31 +0000","sharing":"public","tag_list":"","permalink":"we-are-evil","streamable":true,"embeddable_by":"all","downloadable":false,"purchase_url":"http://wbae.co","label_id":null,"purchase_title":null,"genre":"Rock","title":"We Are Evil","description":" \t\nI am sick of your stories\nI am sick of your stories\nAll the whining and the crying\nThey are just like\nThey are just like mine\n\nWe sold our spines and\nPoisoned our minds\nAnd this is what we get\nCause we are\nEvil\n\nNothing but evil\nOnly evil\nAlways evil\nEveryone is evil\n\nWe do the best we can\nTo hide ourselves\nFrom the truth we fear\nHiding from the light\n\nWe start to blend into one another\nA big gray cloud hovering over\nThese poor little creatures that would otherwise\nBe playing in the sun with great big smiles\nPlay in the sun with great big smiles\n\nSo let’s sing a song where\nNobody’s wrong and everyone can agree\nWe are perfect and live in harmony\n\nWe’ll cover our eyes and tell the lie\nWe’ll say this isn’t all about money\nCause we are evil\n\nNothing but evil\nOnly evil\nAlways evil\nEveryone is evil","label_name":null,"release":null,"track_type":null,"key_signature":null,"isrc":null,"video_url":null,"bpm":null,"release_year":2015,"release_month":11,"release_day":6,"original_format":"aiff","license":"all-rights-reserved","uri":"https://api.soundcloud.com/tracks/232526780","user":{"id":52119028,"kind":"user","permalink":"wildbearsattackelephants","username":"WildBearsAttackElephants","last_modified":"2016/02/19 13:28:10 +0000","uri":"https://api.soundcloud.com/users/52119028","permalink_url":"http://soundcloud.com/wildbearsattackelephants","avatar_url":"https://i1.sndcdn.com/avatars-000048373843-zizehe-large.jpg"},"permalink_url":"http://soundcloud.com/wildbearsattackelephants/we-are-evil","artwork_url":"https://i1.sndcdn.com/artworks-000135750388-qqzpl0-large.jpg","waveform_url":"https://w1.sndcdn.com/YNzFnIr3DiAS_m.png","stream_url":"https://api.soundcloud.com/tracks/232526780/stream","playback_count":54,"download_count":0,"favoritings_count":7,"comment_count":2,"attachments_uri":"https://api.soundcloud.com/tracks/232526780/attachments"},{"kind":"track","id":232526558, ...]
-		</code>
+		<div class="code">
+		<code>
+			<pre>
+[{
+  "kind":"track",
+  "id":232526780,
+  "created_at":"2015/11/11 01:52:54 +0000",
+  "user_id":52119028,
+  "duration":235462,
+  "commentable":true,
+  "state":"finished",
+  "original_content_size":41521460,
+  "last_modified":"2015/11/11 01:55:31 +0000",
+  "sharing":"public",
+  "tag_list":"",
+  "permalink":"we-are-evil",
+  "streamable":true,
+  "embeddable_by":"all",
+  "downloadable":false,
+  "purchase_url":"http://wbae.co",
+  "label_id":null,
+  "purchase_title":null,
+  "genre":"Rock",
+  "title":"We Are Evil",
+  "description":" \t\nI am sick of your stories\nI am sick of your stories\nAll the whining and the crying\nThey are just like\nThey are just like mine\n\nWe sold our spines and\nPoisoned our minds\nAnd this is what we get\nCause we are\nEvil\n\nNothing but evil\nOnly evil\nAlways evil\nEveryone is evil\n\nWe do the best we can\nTo hide ourselves\nFrom the truth we fear\nHiding from the light\n\nWe start to blend into one another\nA big gray cloud hovering over\nThese poor little creatures that would otherwise\nBe playing in the sun with great big smiles\nPlay in the sun with great big smiles\n\nSo let’s sing a song where\nNobody’s wrong and everyone can agree\nWe are perfect and live in harmony\n\nWe’ll cover our eyes and tell the lie\nWe’ll say this isn’t all about money\nCause we are evil\n\nNothing but evil\nOnly evil\nAlways evil\nEveryone is evil",
+  "label_name":null,
+  "release":null,
+  "track_type":null,
+  "key_signature":null,
+  "isrc":null,
+  "video_url":null,
+  "bpm":null,
+  "release_year":2015,
+  "release_month":11,
+  "release_day":6,
+  "original_format":"aiff",
+  "license":"all-rights-reserved",
+  "uri":"https://api.soundcloud.com/tracks/232526780",
+  "user":{
+    "id":52119028,
+    "kind":"user",
+    "permalink":"wildbearsattackelephants",
+    "username":"WildBearsAttackElephants",
+    "last_modified":"2016/02/19 13:28:10 +0000",
+    "uri":"https://api.soundcloud.com/users/52119028",
+    "permalink_url":"http://soundcloud.com/wildbearsattackelephants",
+    "avatar_url":"https://i1.sndcdn.com/avatars-000048373843-zizehe-large.jpg"
+  },
+  "permalink_url":"http://soundcloud.com/wildbearsattackelephants/we-are-evil",
+  "artwork_url":"https://i1.sndcdn.com/artworks-000135750388-qqzpl0-large.jpg",
+  "waveform_url":"https://w1.sndcdn.com/YNzFnIr3DiAS_m.png",
+  "stream_url":"https://api.soundcloud.com/tracks/232526780/stream",
+  "playback_count":54,
+  "download_count":0,
+  "favoritings_count":7,
+  "comment_count":2,
+  "attachments_uri":"https://api.soundcloud.com/tracks/232526780/attachments"
+},{
+  "kind":"track",
+  "id":232526558, ...]</pre>
+		</code></div>
 		<p>
 			As you can see, we have an array of objects, each containing detailed information about the user's tracks. We could get the <span class="special">id</span> for each track and find tracks individually at the endpoint <code>https://api.soundcloud.com/<span class="added">tracks/{track id}</span>?client_id=k345ee556p456i45645t456s56e456c45ret</code>, but since for our application we actually need all of the tracks, this is not necessary.
 		</p>
@@ -27,5 +88,3 @@
 		</p>
 	</section>
 </article>
-<footer>
-</footer>

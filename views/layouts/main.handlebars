@@ -1,7 +1,7 @@
 <!-- 
 	** Author: Collin James, CS 290
-	** Date: 5/10/16
-	** Description: Activity: Get and Post checker, main page
+	** Date: 5/18/16
+	** Description: Activity: How-to Guide, main page
 -->
 <!doctype html>
 <html>
@@ -16,13 +16,13 @@
 			<span>SoundCloud How-To Guide</span>
 			<button class="btn" id="contents">Contents</button>
 			<ul id="dropdown">
-				<li><a href="/?topic=introduction">Introduction</a></li>
-				<li><a href="/?topic=getting_access">Getting Access to the API</a></li>
-				<li><a href="/?topic=searching_for_user_information">Searching for User Information</a></li>
-				<li><a href="/?topic=getting_user_information">Getting a User's Information</a></li>
-				<li><a href="/?topic=getting_track_information">Getting Track Information</a></li>
-				<li><a href="/?topic=getting_comment_information">Getting Comment Information</a></li>
-				<li><a href="/?topic=putting_it_all_together">Putting It All Together</a></li>
+				<li id="introduction"><a href="/?topic=introduction">Introduction</a></li>
+				<li id="getting_access"><a href="/?topic=getting_access">Getting Access to the API</a></li>
+				<li id="searching_for_user_information"><a href="/?topic=searching_for_user_information">Searching for User Information</a></li>
+				<li id="getting_user_information"><a href="/?topic=getting_user_information">Getting a User's Information</a></li>
+				<li id="getting_track_information"><a href="/?topic=getting_track_information">Getting Track Information</a></li>
+				<li id="getting_comment_information"><a href="/?topic=getting_comment_information">Getting Comment Information</a></li>
+				<li id="putting_it_all_together"><a href="/?topic=putting_it_all_together">Putting It All Together</a></li>
 			</ul>
 		</div>
 		
@@ -31,5 +31,10 @@
 		<h1>{{title}}</h1>
 	</div>
 	{{{body}}}
+	<footer>
+		<a href="#" id="prev_page" class="button">Previous</a>
+		<button id="curr_page" style="display: none;">{{topic}}</button>
+		<a href="#" id="next_page" class="button">Next</a>
+	</footer>
 </body>
 </html>

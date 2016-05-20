@@ -1,6 +1,6 @@
 <!-- 
 	** Author: Collin James, CS 290
-	** Date: 5/10/16
+	** Date: 5/18/16
 	** Description: Activity: How-To Guide
 -->
 <article>
@@ -13,15 +13,18 @@
 	<section>
 		<h1>The Calls</h1>
 		Here is a reminder of the calls that we need to make:
-		<p><code rel="Terminal">
-			curl "https://api.soundcloud.com/users/<span class="added">{user id}</span>?client_id=k345ee556p456i45645t456s56e456c45ret"
-		</code></p>
-		<p><code rel="Terminal">
-			curl "https://api.soundcloud.com/users/{user id}/<span class="added">tracks</span>?client_id=k345ee556p456i45645t456s56e456c45ret"
-		</code></p>
-		<p><code rel="Terminal">
-			curl "https://api.soundcloud.com/users/{user id}/<span class="added">comments</span>?client_id=k345ee556p456i45645t456s56e456c45ret"
-		</code></p>
+		<code rel="Terminal">
+<pre>
+curl "https://api.soundcloud.com/users/<span class="added">{user id}</span>?client_id=k345ee556p456i45645t456s56e456c45ret"</pre>
+		</code>
+		<code>
+<pre>
+curl "https://api.soundcloud.com/users/{user id}/<span class="added">tracks</span>?client_id=k345ee556p456i45645t456s56e456c45ret"</pre>
+		</code>
+		<code rel="Terminal">
+<pre>
+curl "https://api.soundcloud.com/tracks/{track id}/<span class="added">comments</span>?client_id=k345ee556p456i45645t456s56e456c45ret"</pre>
+		</code>
 		<p>
 			So let's get started!
 		</p>
@@ -30,8 +33,21 @@
 		<h1>Converting to JavaScript</h1>
 		<h2>User Info</h2>
 		<p>Here's a reminder of our JavaScript function from earlier. This makes a request for a user.</p>
-		<code rel="JavaScript">
-function doAPIcalls () {var req = new XMLHttpRequest();req.open("GET", "https://api.soundcloud.com/users/52119028?client_id=k345ee556p456i45645t456s56e456c45ret");req.addEventListener('load', function () {if(req.status >= 200 && req.status < 400){var data = JSON.parse(req.responseText);console.log(data);} else {console.log("Whoops, something went wrong. Maybe: ", req.statusText);}});req.send();}
+		<code>
+<pre>
+function doAPIcalls () {
+  var req = new XMLHttpRequest();
+  req.open("GET", "https://api.soundcloud.com/users/52119028?client_id=k345ee556p456i45645t456s56e456c45ret");
+  req.addEventListener('load', function () {
+    if(req.status >= 200 && req.status < 400){
+      var data = JSON.parse(req.responseText);
+    } else {
+      console.log("Whoops, something went wrong. Maybe: ", req.statusText);
+    }
+  });
+  req.send();
+}  
+</pre>
 		</code>
 		<p>
 			We're interested in the <span class="special">full_name</span> property; that will be the band name. In our code, we'll access that with <code>data.full_name</code>. Let's actually make the call and display the full name below:
@@ -40,31 +56,91 @@ function doAPIcalls () {var req = new XMLHttpRequest();req.open("GET", "https://
 
 		</div>
 		<p>Here's the code that put that on the page for us:</p>
-		<code rel="JavaScript">
-var span = document.createElement("span");span.textContent = data.full_name;full_name.appendChild(span);
+		<code>
+			<pre>
+var full_name = document.getElementById("full_name");
+var span = document.createElement("span");
+span.textContent = data.full_name;
+full_name.appendChild(span);
+</pre>
 		</code>
-		<h2>Track Info</h2>
+		<h2>Track and Comments</h2>
 		<p>
-			Now to get the tracks on the page. Here's what it should look like: 
+			Now to get the tracks and the comments on the page. Here's a live example of what it should look like: 
 		</p>
 		<div id="track_table" class="app">
 
 		</div>
 		<p>
-			And here's our call. I'll leave the <code>buildTable()</code> function as an exercise to the reader.
+			And here's our call.
 		</p>
-		<code rel="JavaScript">
-req2 = new XMLHttpRequest();req2.open("GET", "https://api.soundcloud.com/users/52119028/tracks?client_id=1306a99549a44496515f2e61993af805", true);req2.addEventListener('load', function () {if(req2.status >= 200 && req2.status < 400){data = JSON.parse(req2.responseText);var headers = ["title", "plays", "favoritings", "comments"], keys = ["title", "playback_count", "favoritings_count"], table = buildTable(data, headers, keys);if(table){var tbl = document.getElementById('track_table');tbl.appendChild(table);}} else {console.log("Whoops, something went wrong. Maybe: ", req2.statusText);}});req2.send();
-		</code>
-		<h2>Adding Comments</h2>
-		<p>
-			Notice that in the table above, I left the <span class="special">comments</span> column open. We'll now get the comments for our user, loop through them and put them with the correct tracks. Push the button to see what it looks like in the table above.
-			<button id="add_comments">Add Comments</button> 
-		</p>
-		<div id="track_table" class="app">
+		<!-- <code rel="JavaScript"> -->
+		<code>
+<pre>
+req2 = new XMLHttpRequest();
+req2.open("GET", "https://api.soundcloud.com/users/"+USERID+"/tracks?client_id="+CLIENTID, true);
+req2.addEventListener('load', function () {
+  if(req2.status >= 200 && req2.status < 400){ // check for valid request
+    data = JSON.parse(req2.responseText);
+    var headers = ["title", "plays", "favoritings", "comments"],
+      keys = ["title", "playback_count", "favoritings_count", ""],
+      table;
+    table = buildTable(data, headers, keys);
+    if(table)
+    {
+      var tbl = document.getElementById('track_table');
+      tbl.appendChild(table);
 
-		</div>
+      /* make a separate API request for comments for each track */
+      data.forEach(function (track) {
+        var requ = new XMLHttpRequest();
+        requ.open("GET", "https://api.soundcloud.com/tracks/"+track.id+"/comments?client_id="+CLIENTID, true);
+        requ.addEventListener('load', function () {
+          if(requ.status >= 200 && requ.status < 400){ // check for valid request
+            data = JSON.parse(requ.responseText);
+            var uls = {}, ul, li;
+            /* filter comments and put them in table */
+            data.forEach(function (comment) { //id, body
+              if(comment.user_id != USERID){
+                if(!uls[comment.track_id]){
+                  ul = document.createElement('ul');
+                  ul.id = 'c_'+comment.track_id;
+                  uls[comment.track_id] = ul;
+                }
+                li = document.createElement('li');
+                li.textContent = comment.body;
+                uls[comment.track_id].appendChild(li);
+              }
+            });
+            var curr_track;
+            for(key in uls){
+              if(curr_track = document.getElementById(key)){
+                curr_track.lastElementChild.appendChild(uls[key]);
+              }
+            }
+          } else {
+            console.log("Whoops, something went wrong. Maybe: ", requ.statusText);
+          }
+        });
+        requ.send();
+      });
+    }
+  } else {
+    console.log("Whoops, something went wrong. Maybe: ", req2.statusText);
+  }
+});
+req2.send();
+</pre>
+		</code>
+		<p>
+			It gets a little intense here; let's break it down. We first make a call to the API that returns all of the tracks for our user. Once we have that info, we build and append the table with all of the track info except comments. I'll leave the <code>buildTable()</code> function as an exercise to the reader. 
+		</p>
+		<p>
+			Then, for each track object, we make a separate API call to get all of the tracks for that object. We use the <span class="special">track_id</span> variable in the call to get the comments for each track. Once we have the comment information, we can filter it as necessary (I filtered out comments made by our user), create some HTML elements, and finally add them to the page.
+		</p>
+	</section>
+	<section>
+		<h1>Congratulations</h1>
+		<p>You've made it to the end of the tutorial. We covered how to make a basic application using some of SoundCloud.com's API calls. Remember, there are many more calls to be made, and even wrappers for other web languages, so head over to SC's <a href="https://developers.soundcloud.com/">developer pages</a> to learn more. Have fun!</p>
 	</section>
 </article>
-<footer>
-</footer>
